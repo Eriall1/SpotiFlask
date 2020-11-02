@@ -1,0 +1,151 @@
+<title>SpotiFlask Query</title>
+<head >
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div>
+<h1>Query SpotiFlask Database</h1>
+</div>
+<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2><a href="{{ url_for('guide') }}">User Guide</a></h2>
+<br>
+<div class="form-group">
+    <label for="tableselect">Choose a Table:</label>
+    <select name="tableselect" id="tableselect">
+        {% if tableNames|length != 0%}
+            {% for name in tableNames %}
+                <option value="{{ name[0] }}">{{ name[0] }}</option>
+            {% endfor %}
+        {% else %}
+            <option>No Tables Found! Try remaking the database in Tables</option>
+        {% endif %}
+    </select>
+    <br>
+    <label for="varselect" id="varlabel" hidden>Choose a variable to search: </label>
+    <select name="varselect" id="varselect" disabled hidden>
+        <option>placeholder</option>
+    </select>
+    <br>
+    <label for="queryInput" id="queryLabel" hidden>Type something to search: </label>
+    <form action="{{ url_for('query')}}" method="POST" id="queryForm" disabled hidden>
+        <input type="text" id="queryInput" name="queryInput" hidden disabled><br><br>
+        <input type="submit" value="Submit" id="submitButton" hidden disabled>
+    </form>
+</div>
+
+
+{% if resultHeading is defined %}
+    <h2>{{resultHeading}}</h2>
+{% endif %}
+
+{% if tableHeadings is defined and tablesHeadings|length != 0 and queryResults is defined and queryResults|length != 0 %}
+    <table border=1>
+        <tr>
+            {% for header in tableHeadings %}
+                <th>{{ header[1] }}</th>
+            {% endfor %}
+        </tr>
+        
+        {% for name in queryResults %}
+        <tr>
+            {% for data in name %}
+                <td>{{data}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p color="red">No results found for current query!</p>
+{% endif %}
+{% block scripts %}
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    // this is called a javascript closure. it also wont run the code until the page is finished loading
+    // and it protects the scope of your variables from other code you may later add to the page
+    $(document).ready (function() {
+        console.log("RUNNING FUNCTION")
+        var select_table = $('#tableselect'),
+            select_variable = $('#varselect'),
+            variable_label = $('#varlabel'),
+            queryLabel = $('#queryLabel'),
+            queryForm = $('#queryForm'),
+            queryInput = $('#queryInput'),
+            submitButton = $('#submitButton');
+        var variableList;
+
+
+        
+        select_table.change(function() {
+            // fires when room selection changes
+            console.log("CHANGED")
+            console.log(select_table.val())
+            getUpdatedSettings()
+        });
+
+        select_variable.change(function() {
+            console.log("CHANGED")
+            console.log(select_variable.val())
+            onVariableChange()
+        })
+
+        queryInput.change(function(){
+            console.log("CHANGED")
+            console.log(queryInput.val())
+            onQueryChange()
+        })
+
+        function onVariableChange() {
+            queryLabel.removeAttr('disabled')
+            queryLabel.removeAttr('hidden')
+            queryForm.removeAttr('disabled')
+            queryForm.removeAttr('hidden')
+            queryInput.removeAttr('disabled')
+            queryInput.removeAttr('hidden')
+        }
+
+        function onQueryChange(){
+            submitButton.removeAttr('disabled')
+            submitButton.removeAttr('hidden')
+        }
+        function getUpdatedSettings() {
+            // data to send back to the server
+            var send = {table: select_table.val(),};
+
+            // make the selections disabled while fetching new data
+            select_variable.attr('disabled', true);
+            select_table.attr('disabled', true);
+            select_variable.attr('hidden', true);
+            variable_label.attr('hidden', true)
+            
+            $.getJSON("/_get_table_values", send, function(response) {
+                // this send the room and the day select vals to the URL specified
+                // we will need to add a handler for this in Flask
+
+                // for the purpose of the example I am assuming the response will be
+                // a JSON object that has a dictionary of elements ("am_1" and "am_2")
+                // each of which is a list of values for the selects....
+
+                console.log(response); // good for QA!
+
+                // populate 1am
+                select_variable.empty();
+                variableList = response.variables;
+                $.each(response.variables, function (index, value) {
+                    select_variable.append(
+                    $('<option>', {
+                        value: value,
+                        text: value
+                    }, '</option>'))
+                });
+                select_variable.append($('<option>', {value:"*", text:"*"}));
+                // remove disabled now
+                select_variable.removeAttr('disabled');
+                select_variable.removeAttr('hidden');
+                variable_label.removeAttr('hidden')
+                select_table.removeAttr('disabled')
+            });
+        }
+    });
+</script>
+{% endblock %}

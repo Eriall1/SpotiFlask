@@ -1,0 +1,5 @@
+h2{
+    display: inline;
+}
+table  { margin-top:  0px; display: inline-block; overflow: auto; border-spacing: 0px; max-height: 500px;}
+th div { margin-top: -20px; position: absolute;}

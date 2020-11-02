@@ -1,0 +1,21 @@
+<!doctype html>
+<title>SpotiFlask Homepage</title>
+<head>
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div>
+<h1>SpotiFlask Homepage</h1>
+</div>
+<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2><a href="{{ url_for('query') }}">Run Query</a></h2>
+<h2><a href="{{ url_for('guide') }}">User Guide</a></h2><br><br>
+<hr>
+<br>
+<button id="initDB">Initialise Database</button><br><br>
+<button id="fillDB">Fill Database</button><br><br>
+<button id="clearDB">Delete Database</button><br><br>
+<hr>
+<img src="/static/loading.gif" id="loadingGif" hidden/>
+<script src="/static/tables.js"></script>

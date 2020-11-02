@@ -1,0 +1,16 @@
+<!doctype html>
+<title>SpotiFlask Homepage</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div>
+<h1>SpotiFlask Homepage</h1>
+</div>
+<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2><a href="{{ url_for('query') }}">Run Query</a></h2>
+<h2><a href="{{ url_for('guide') }}">User Guide</a></h2>
+<br>
+<h3>Current Tables: {{tableNames|length}}</h3>
+<ul>
+    {% for name in tableNames%}
+    <li>{{name[0]}}</li>
+    {% endfor %}
+</ul>

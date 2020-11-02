@@ -1,0 +1,85 @@
+<title>SpotiFlask Query</title>
+<head >
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
+    <script src="/static/jquery-1.11.0.min.js"></script>
+    <script src="/static/querySelect.js"></script>
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<h1>Query SpotiFlask Database</h1>
+<div>
+<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2><a href="{{ url_for('guide') }}">User Guide</a></h2>
+</div>
+<br>
+<div class="form-group">
+    <label for="singleMultiC" id="singleMultiL">Choose from a Single or Multi Table Search:</label>
+    <br>
+    <select name="SingleMultiC" id="singleMultiC">
+        <option>Select One</option>
+        <option value="Single">Single</option>
+        <option value="Multiple">Multiple</option>
+    </select>
+    <br>
+    <label for="tableselect" id="tableselectL1" hidden>Choose a Table*:</label>
+    <select name="tableselect1" id="tableselect1" hidden>
+        {% if tableNames|length != 0%}
+            {% for name in tableNames %}
+                <option value="{{ name[0] }}">{{ name[0] }}</option>
+            {% endfor %}
+        {% else %}
+            <option>No Tables Found! Try remaking the database in Tables</option>
+        {% endif %}
+    </select>
+    <br>
+    <label for="tableselect2" id="tableselectL2" hidden>Choose a Table*:</label>
+    <select name="tableselect2" id="tableselect2" hidden>
+        {% if tableNames|length != 0%}
+            {% for name in tableNames %}
+                <option value="{{ name[0] }}">{{ name[0] }}</option>
+            {% endfor %}
+        {% else %}
+            <option>No Tables Found! Try remaking the database in Tables</option>
+        {% endif %}
+    </select>
+    <label for="varselect1" id="varlabel1" hidden>Choose a variable to search*: </label>
+    <select name="varselect1" id="varselect1" disabled hidden></select>
+    <br>
+    <label for="varselect2" id="varlabel2" hidden>Choose a second variable to search*: </label>
+    <select name="varselect2" id="varselect2" disabled hidden></select>
+    <br>
+    <label for="queryvarselect" id="query_variable_label" disabled hidden>Choose a variable to query by*</label>
+    <select name="queryvarselect" id="queryvarselect" disabled hidden></select>
+    <br>
+    <label for="queryInput" id="queryLabel" hidden>Type something to search (blank for all results): </label>
+    <input type="text" id="queryInput" name="queryInput" hidden disabled>
+    <br>
+    <label for="orderTable" id="orderTableLabel" hidden>Order Table*:</label>
+    <select name="orderTable" id="orderTable" disabled hidden></select>
+    <br>
+    <label for="orderSelect" id="orderSelectLabel" hidden>Order By*:</label>
+    <select name="orderSelect" id="orderSelect" disabled hidden></select>
+    <br>
+    
+    <label for="groupTable" id="groupTableLabel" hidden>Group Table*:</label>
+    <select name="groupTable" id="groupTable" disabled hidden></select>
+    <br>
+    <label for="groupSelect" id="groupSelectLabel" hidden>Group By*:</label>
+    <select name="groupSelect" id="groupSelect" disabled hidden></select>
+    <br><br>
+    
+    <button id="submitButton" hidden>Query Database</button>
+</div>
+<br size="10">
+<p>* = Required</p>
+
+
+
+<h2 id="resultHeading" class="resultHeading" hidden></h2><br>
+
+<table id="resultsTable" hidden>
+    <thead></thead>
+    <tbody border=0></tbody>
+</table>
+<img src="/static/OHNO.gif" alt="OHNO" title="OHNO" id="ohnoGif" hidden /><br>
+<img src="/static/hacking.gif" alt="Hacking" title="Hacking" id="hackingGif" hidden />

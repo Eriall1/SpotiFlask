@@ -1,46 +1,25 @@
-import spotipy, os, time
-from spotipy.oauth2 import SpotifyOAuth
-from spotipy import util
-import sqlite3
-from classes import Database
+import spotipy, os, time, _pickle as cPickle, sqlite3, flask
+from flaskapp import app, delete_db
 
-# Set up connection to database and open a cursor
-db = sqlite3.connect("spotiFlaskDB.db")
-cursor = db.cursor()
-
-
-
-# Save changes to the database and close the cursor
-db.commit()
-db.close()
-
-from dotenv import load_dotenv
-import pandas as pd
-
-load_dotenv()
-scope = os.environ.get("SPOTIFLASK_SCOPE")
-cache = os.environ.get("SPOTIFLASK_CACHE")
-username = "test user"
-
-import _pickle as cPickle
-
-token = util.prompt_for_user_token(username=username, cache_path=cache, scope=scope)
-
-sp = spotipy.Spotify(token)
-
-x = Database(token, sp)
-x.objToDB()
+#x = Database(token)
+#x.objToDB()
+delete_db()
+app.run("0.0.0.0", debug=True)
 
 #with open("playlists.txt", 'w+') as f:
 #code to gather all tracks, use caches version for reduced requests to spotify api
 
 
-
-
-
-
-
-
+"""
+client_id = os.environ.get("SPOTIPY_CLIENT_ID")
+client_secret = os.environ.get("SPOTIPY_CLIENT_SECRET")
+scope = os.environ.get("SPOTIFLASK_SCOPE")
+cache = os.environ.get("SPOTIFLASK_CACHE")
+redirect_uri = os.environ.get("SPOTIPY_REDIRECT_URI")
+username = "Eriall"
+#oauth = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+#oauth = SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope, username=username)
+"""
 
 
 
