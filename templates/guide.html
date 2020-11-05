@@ -1,14 +1,13 @@
 <!doctype html>
 <title>SpotiFlask User Guide</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='guidestyling.css') }}">
 <div>
-<h1>SpotiFlask User Guide</h1>
+<h1 class="heading">SpotiFlask User Guide</h1>
 </div>
-<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
-<h2><a href="{{ url_for('query') }}">Run Query</a></h2>
-<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2 class="link"><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2 class="link"><a href="{{ url_for('query') }}">Run Query</a></h2>
+<h2 class="link"><a href="{{ url_for('homepage') }}">Homepage</a></h2>
 
-<h3 style="color:fuchsia;">User Guide</h3>
 <div class="text">
 {% for line in lines%}
 {{line|safe}}

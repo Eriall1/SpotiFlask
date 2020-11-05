@@ -1,50 +1,17 @@
-2020-11-02 15:50:21,638 INFO DROPPING DATABASE; User Call
-2020-11-02 15:50:21,638 WARNING RuntimeError; Working outside of application context.
+2020-11-05 17:16:02,120 INFO DROPPING DATABASE; User Call
+2020-11-05 17:16:02,120 WARNING RuntimeError; Working outside of application context.
 
 This typically means that you attempted to use functionality that needed
 to interface with the current application object in some way. To solve
 this, set up an application context with app.app_context().  See the
 documentation for more information.; POSSIBLE REASON: FIRST TIME STARTUP
-2020-11-02 15:50:27,635 DEBUG ImmutableMultiDict([('table', 'Tracks')])
-2020-11-02 15:50:27,635 DEBUG Tracks
-2020-11-02 15:50:27,637 DEBUG [(0, 'songID', 'CHAR(22)', 0, None, 1), (1, 'duration', 'INT', 1, None, 0), (2, 'songName', 'VARCHAR(200)', 1, None, 0), (3, 'popularity', 'INT', 1, None, 0), (4, 'genre', 'VARCHAR(20)', 0, None, 0), (5, 'albumID', 'CHAR(22)', 1, None, 0), (6, 'artistID', 'CHAR(22)', 1, None, 0)]
-2020-11-02 15:50:29,564 DEBUG ImmutableMultiDict([('table', 'Tracks'), ('variable', 'songName'), ('qVar1', 'songName'), ('query', ''), ('order', ''), ('group', ''), ('multi', 'false')])
-2020-11-02 15:50:29,565 DEBUG False
-2020-11-02 15:52:36,831 DEBUG ImmutableMultiDict([('table', 'Albums')])
-2020-11-02 15:52:36,832 DEBUG Albums
-2020-11-02 15:52:36,840 DEBUG [(0, 'albumID', 'CHAR(22)', 0, None, 1), (1, 'albumName', 'VARCHAR(200)', 1, None, 0), (2, 'albumSongs', 'INT', 0, None, 0)]
-2020-11-02 15:54:39,510 DEBUG ImmutableMultiDict([('table', 'Tracks')])
-2020-11-02 15:54:39,510 DEBUG Tracks
-2020-11-02 15:54:39,513 DEBUG [(0, 'songID', 'CHAR(22)', 0, None, 1), (1, 'duration', 'INT', 1, None, 0), (2, 'songName', 'VARCHAR(200)', 1, None, 0), (3, 'popularity', 'INT', 1, None, 0), (4, 'genre', 'VARCHAR(20)', 0, None, 0), (5, 'albumID', 'CHAR(22)', 1, None, 0), (6, 'artistID', 'CHAR(22)', 1, None, 0)]
-2020-11-02 15:55:10,367 DEBUG ImmutableMultiDict([('table', 'Tracks')])
-2020-11-02 15:55:10,368 DEBUG Tracks
-2020-11-02 15:55:10,377 DEBUG [(0, 'songID', 'CHAR(22)', 0, None, 1), (1, 'duration', 'INT', 1, None, 0), (2, 'songName', 'VARCHAR(200)', 1, None, 0), (3, 'popularity', 'INT', 1, None, 0), (4, 'genre', 'VARCHAR(20)', 0, None, 0), (5, 'albumID', 'CHAR(22)', 1, None, 0), (6, 'artistID', 'CHAR(22)', 1, None, 0)]
-2020-11-02 15:56:34,174 DEBUG ImmutableMultiDict([('table', 'Tracks')])
-2020-11-02 15:56:34,175 DEBUG Tracks
-2020-11-02 15:56:34,181 DEBUG [(0, 'songID', 'CHAR(22)', 0, None, 1), (1, 'duration', 'INT', 1, None, 0), (2, 'songName', 'VARCHAR(200)', 1, None, 0), (3, 'popularity', 'INT', 1, None, 0), (4, 'genre', 'VARCHAR(20)', 0, None, 0), (5, 'albumID', 'CHAR(22)', 1, None, 0), (6, 'artistID', 'CHAR(22)', 1, None, 0)]
-2020-11-02 15:56:39,584 DEBUG ImmutableMultiDict([('table', 'Tracks'), ('variable', 'songName'), ('qVar1', 'songName'), ('query', ''), ('order', 'songID'), ('group', 'songID'), ('multi', 'false')])
-2020-11-02 15:56:39,584 DEBUG False
-2020-11-02 15:57:35,546 DEBUG ImmutableMultiDict([('table', 'Tracks')])
-2020-11-02 15:57:35,546 DEBUG Tracks
-2020-11-02 15:57:35,555 DEBUG [(0, 'songID', 'CHAR(22)', 0, None, 1), (1, 'duration', 'INT', 1, None, 0), (2, 'songName', 'VARCHAR(200)', 1, None, 0), (3, 'popularity', 'INT', 1, None, 0), (4, 'genre', 'VARCHAR(20)', 0, None, 0), (5, 'albumID', 'CHAR(22)', 1, None, 0), (6, 'artistID', 'CHAR(22)', 1, None, 0)]
-2020-11-02 15:57:37,764 DEBUG ImmutableMultiDict([('table', 'Tracks'), ('variable', 'songName'), ('qVar1', 'songName'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 15:57:37,764 DEBUG False
-2020-11-02 15:58:23,128 DEBUG ImmutableMultiDict([('table', 'Playlists')])
-2020-11-02 15:58:23,128 DEBUG Playlists
-2020-11-02 15:58:23,130 DEBUG [(0, 'playlistID', 'CHAR(22)', 0, None, 1), (1, 'songCount', 'INT', 1, None, 0), (2, 'userID', 'VARCHAR(22)', 1, None, 0), (3, 'playlistName', 'VARCHAR(100)', 1, None, 0)]
-2020-11-02 15:58:26,463 DEBUG ImmutableMultiDict([('table', 'Playlists'), ('variable', 'userID'), ('qVar1', 'userID'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 15:58:26,464 DEBUG False
-2020-11-02 15:58:39,650 DEBUG ImmutableMultiDict([('table', 'Albums')])
-2020-11-02 15:58:39,651 DEBUG Albums
-2020-11-02 15:58:39,652 DEBUG [(0, 'albumID', 'CHAR(22)', 0, None, 1), (1, 'albumName', 'VARCHAR(200)', 1, None, 0), (2, 'albumSongs', 'INT', 0, None, 0)]
-2020-11-02 15:58:42,162 DEBUG ImmutableMultiDict([('table', 'Albums'), ('variable', 'albumName'), ('qVar1', 'albumName'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 15:58:42,162 DEBUG False
-2020-11-02 15:58:53,328 DEBUG ImmutableMultiDict([('table', 'Albums'), ('variable', '*'), ('qVar1', 'albumID'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 15:58:53,329 DEBUG False
-2020-11-02 15:59:58,812 DEBUG ImmutableMultiDict([('table', 'Albums')])
-2020-11-02 15:59:58,812 DEBUG Albums
-2020-11-02 15:59:58,816 DEBUG [(0, 'albumID', 'CHAR(22)', 0, None, 1), (1, 'albumName', 'VARCHAR(200)', 1, None, 0), (2, 'albumSongs', 'INT', 0, None, 0)]
-2020-11-02 16:00:00,964 DEBUG ImmutableMultiDict([('table', 'Albums'), ('variable', 'albumName'), ('qVar1', 'albumName'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 16:00:00,964 DEBUG False
-2020-11-02 16:00:05,113 DEBUG ImmutableMultiDict([('table', 'Albums'), ('variable', '*'), ('qVar1', 'albumID'), ('query', ''), ('order', 'None'), ('group', 'None'), ('multi', 'false')])
-2020-11-02 16:00:05,114 DEBUG False
+2020-11-05 17:16:02,121 WARNING Re calling delete_db out of application context
+2020-11-05 17:16:02,142 DEBUG DROPPING User; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,156 DEBUG DROPPING Playlists; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,168 DEBUG DROPPING Tracks; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,181 DEBUG DROPPING Albums; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,193 DEBUG DROPPING Artists; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,206 DEBUG DROPPING TrackAlbum; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,232 DEBUG DROPPING TrackArtists; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,247 DEBUG DROPPING TrackPlaylists; REASON: User Call [Delete Database]
+2020-11-05 17:16:02,264 DEBUG DROPPING AlbumArtists; REASON: User Call [Delete Database]

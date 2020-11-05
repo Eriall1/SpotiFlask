@@ -1,21 +1,43 @@
 <!doctype html>
-<title>SpotiFlask Homepage</title>
+<title>SpotiFlask Tables</title>
 <head>
     <link href="/static/favicon.ico" rel="icon" type="image/x-icon"/>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/static/jquery-1.11.0.min.js"></script>
 </head>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div>
-<h1>SpotiFlask Homepage</h1>
+<h1 class="heading">SpotiFlask Tables</h1>
 </div>
-<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
-<h2><a href="{{ url_for('query') }}">Run Query</a></h2>
-<h2><a href="{{ url_for('guide') }}">User Guide</a></h2><br><br>
+<h2 class="link"><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2 class="link"><a href="{{ url_for('query') }}">Run Query</a></h2>
+<h2 class="link"><a href="{{ url_for('guide') }}">User Guide</a></h2><br><br>
 <hr>
 <br>
 <button id="initDB">Initialise Database</button><br><br>
 <button id="fillDB">Fill Database</button><br><br>
 <button id="clearDB">Delete Database</button><br><br>
+<button id="genReportButton">Generate Report</button>
+<hr>
+<p>Insert Data into User Table</p>
+<form action="/insertUser" id="formInput">
+    <label for="id">UserID:</label>
+    <input type="text" id="id" name="id"><br><br>
+    <label for="token">Token (Can be Null):</label>
+    <input type="text" id="token" name="token"><br><br>
+    <label for="isPremium">Are you Premium:</label>
+    <input type="checkbox" id="isPremium" name="isPremium" value="True"><br><br>
+    <label for="displayName">Display Name:</label>
+    <input type="text" id="displayName" name="displayName"><br><br>
+    <input type="submit" value="Submit">
+  </form>
 <hr>
 <img src="/static/loading.gif" id="loadingGif" hidden/>
+<table id="reportTable" hidden>
+    <thead id="reportTableH">
+
+    </thead>
+    <tbody id="reportTableB">
+
+    </tbody>
+</table>
 <script src="/static/tables.js"></script>

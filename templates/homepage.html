@@ -2,11 +2,11 @@
 <title>SpotiFlask Homepage</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <div>
-<h1>SpotiFlask Homepage</h1>
+<h1 class="heading">SpotiFlask Homepage</h1>
 </div>
-<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
-<h2><a href="{{ url_for('query') }}">Run Query</a></h2>
-<h2><a href="{{ url_for('guide') }}">User Guide</a></h2>
+<h2 class="link"><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2 class="link"><a href="{{ url_for('query') }}">Run Query</a></h2>
+<h2 class="link"><a href="{{ url_for('guide') }}">User Guide</a></h2>
 <br>
 <h3>Current Tables: {{tableNames|length}}</h3>
 <ul>

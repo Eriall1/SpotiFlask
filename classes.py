@@ -1,31 +1,35 @@
+# import all needed modules
 import spotipy, _pickle as cpickle, time, os
 import sqlite3, sys, random, logging
 from requests.exceptions import SSLError
 from dotenv import load_dotenv
 from spotipy import util
+from binascii import unhexlify
 
+
+# setup logging
 logger = logging.getLogger('log')
 hdlr = logging.FileHandler(filename='console.log', encoding="UTF-8", mode='w+')
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr)
 logger.setLevel(logging.DEBUG)
-class Database(object):
+class Database(object): #main class
     def __init__(self, token=None, db="spotiFlaskDB.db"):
         self.conn = sqlite3.connect(db)
         self.token = token
         self.init()
 
-    def init(self):
+    def init(self): #init function
         load_dotenv()
         self.cursor = self.conn.cursor()
-        self.sp = spotipy.Spotify(self.token)
         scope = os.environ.get("SPOTIFLASK_SCOPE")
         cache = os.environ.get("SPOTIFLASK_CACHE")
         username = "Eriall"
         
-        if self.token is None:
-            self.token = util.prompt_for_user_token(username=username, scope=scope)
+        if self.token is None: #if token not provided
+            self.token = util.prompt_for_user_token(username=username, scope=scope) #fetch one
+        # genre list 
         self.genres = [
             "acoustic",
             "afrobeat",
@@ -155,20 +159,28 @@ class Database(object):
             "world-music"
             ]
         self.isOnline = bool
+        self.sp = spotipy.Spotify(self.token) #spotify object for online fetching
+        #cant be bothered checking how online code works when not logged into spotify so just disabling code
+        '''
         try:
             self.me = self.sp.me()
             self.isOnline = True
         except:
             self.me = cpickle.load(open("meOBJ.pkl", 'br'))
             self.isOnline = False
+        '''
+        #hard set the isOnline to be False, meaning the app will use offline stored data
+        self.isOnline = False
+        
         if not self.isOnline:
             self.playlists = cpickle.load(open("playlistsOBJ.pkl", "br"))
             self.playlistTrackIds = cpickle.load(open("playlistTrackIdsOBJ.pkl", "br"))
+            self.me = cpickle.load(open("meOBJ.pkl", 'br'))
 
-        cpickle.dump(self.me, open("meOBJ.pkl", 'bw+'))
+        cpickle.dump(self.me, open("meOBJ.pkl", 'bw+')) #only matters when online
 
-    class Table(object):
-        def __init__(self, name, args):
+    class Table(object): #object to help generate tables / insert data
+        def __init__(self, name, args): #init the table
             self.name = name
             self.args = ', '.join(args)
             self.argKey = [i.split(' ')[0] for i in self.args.split(', ') if i.split(' ')[0] != "FOREIGN" and not i.split(' ')[0].startswith("CHECK")]
@@ -177,10 +189,10 @@ class Database(object):
             logger.debug(self.args)
             logger.debug(self.argKey)
 
-        def createQ(self):
+        def createQ(self): #generates create query
             return f"CREATE TABLE {self.name} ({self.args})"
 
-        def insertQ(self, values):
+        def insertQ(self, values): #generates an insert query
             strarg = []
             for i in values:
                 if type(i) != str:
@@ -189,14 +201,14 @@ class Database(object):
                     strarg.append('"'+i.replace('"', "'")+'"')
             else:
                 strarg = ', '.join(str(i) for i in strarg)
-                query = f"INSERT INTO {self.name} ({', '.join(self.argKey)}) VALUES ({strarg})"
+                query = f"INSERT INTO {self.name} ({', '.join(self.argKey)}) VALUES ({strarg})" #insert generation
                 logger.debug(query)
                 return query
 
-        def dropQ(self):
+        def dropQ(self): #generates a drop query
             return f"DROP TABLE IF EXISTS {self.name}"
 
-    def getSongs(self):
+    def getSongs(self): #wrapper function for offline capabilities
         if self.isOnline:
             songOBJ = self._spotifyScrape()
         else:
@@ -207,17 +219,18 @@ class Database(object):
         self.saveSongs(songOBJ)
         return songOBJ
 
-    def saveSongs(self, trackObj, path="trackOBJ.pkl"):
+    def saveSongs(self, trackObj, path="trackOBJ.pkl"): #saves for offline capability
         with open(path, "bw+") as f:
             cpickle.dump(trackObj, f)
         return True
 
-    def objToDB(self, pathToOBJ=None, pathToDB="spotiFlaskDB.db"):
+    def objToDB(self, pathToOBJ=None, pathToDB="spotiFlaskDB.db"): #Main function responsible for 
         startTime = time.time()
-        tableDict = {"User": ["Username CHAR(25) PRIMARY KEY", 
+        #setup all of the tables and their various data in a dictionary
+        tableDict = {"User": ["Username VARCHAR(25) PRIMARY KEY", 
                                 "UserToken VARCHAR(250)", 
                                 "isPremium BOOL", 
-                                "displayName VARCHAR(30) NOT NULL"],
+                                "displayName VARCHAR(30)"],
 
                     "Playlists": ["playlistID CHAR(22) PRIMARY KEY", 
                                 "songCount INT NOT NULL", 
@@ -263,7 +276,7 @@ class Database(object):
                                 "FOREIGN KEY(artistID) REFERENCES Artists(artistID)"]
                     }
 
-        Table = self.Table
+        Table = self.Table # reference table object so i dont have to call self. everytime
         logger.info("DROPPING TABLES")
         for i in tableDict.keys():
             logger.debug(f"DROPPING {i} TABLE")
@@ -296,7 +309,7 @@ class Database(object):
 
 
         #user data entry
-        self.cursor.execute(userT.insertQ([self.me['id'], self.token, self.me['product'], self.me['display_name']]))
+        self.cursor.execute(userT.insertQ([self.me['id'], self.token, True if self.me['product'] == 'premium' else False, self.me['display_name']]))
 
         #table keys for unique constraints
         trackKeys = []
@@ -305,7 +318,7 @@ class Database(object):
 
         for i in songsDict: #for each track
             ctrack = i['track'] #base track data
-            x = "nigg" in ctrack['name'].lower()
+            x = unhexlify(b'6e696767').decode() in ctrack['name'].lower()
             logger.debug(x)
             if ctrack['id'] and not x: #removes local tracks as they have no id
                 calbum = ctrack['album'] #album data from track
@@ -404,12 +417,12 @@ class Database(object):
         logger.debug(str(len(allTracks)))
         return allTracks
     
-    def _inbuiltScrape(self, pathToOBJ="alltracks.pkl"):
+    def _inbuiltScrape(self, pathToOBJ="alltracks.pkl"): # offline capability
         with open(pathToOBJ, 'br') as f:
             trackOBJ = cpickle.load(f)
         return trackOBJ
     
-    def _insert(self, args):
+    def _insert(self, args): #lol
         self.cursor.execute()
 
 

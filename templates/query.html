@@ -5,13 +5,14 @@
     <script src="/static/querySelect.js"></script>
 </head>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<h1>Query SpotiFlask Database</h1>
+<h1 class="heading">Query SpotiFlask Database</h1>
 <div>
-<h2><a href="{{ url_for('tables') }}">Tables</a></h2>
-<h2><a href="{{ url_for('homepage') }}">Homepage</a></h2>
-<h2><a href="{{ url_for('guide') }}">User Guide</a></h2>
+<h2 class="link"><a href="{{ url_for('tables') }}">Tables</a></h2>
+<h2 class="link"><a href="{{ url_for('homepage') }}">Homepage</a></h2>
+<h2 class="link"><a href="{{ url_for('guide') }}">User Guide</a></h2>
 </div>
 <br>
+
 <div class="form-group">
     <label for="singleMultiC" id="singleMultiL">Choose from a Single or Multi Table Search:</label>
     <br>
@@ -42,10 +43,11 @@
             <option>No Tables Found! Try remaking the database in Tables</option>
         {% endif %}
     </select>
+    <br>
     <label for="varselect1" id="varlabel1" hidden>Choose a variable to search*: </label>
     <select name="varselect1" id="varselect1" disabled hidden></select>
     <br>
-    <label for="varselect2" id="varlabel2" hidden>Choose a second variable to search*: </label>
+    <label for="varselect2" id="varlabel2" hidden>Choose a second variable to search (Second Table)*: </label>
     <select name="varselect2" id="varselect2" disabled hidden></select>
     <br>
     <label for="queryvarselect" id="query_variable_label" disabled hidden>Choose a variable to query by*</label>
@@ -54,15 +56,8 @@
     <label for="queryInput" id="queryLabel" hidden>Type something to search (blank for all results): </label>
     <input type="text" id="queryInput" name="queryInput" hidden disabled>
     <br>
-    <label for="orderTable" id="orderTableLabel" hidden>Order Table*:</label>
-    <select name="orderTable" id="orderTable" disabled hidden></select>
-    <br>
     <label for="orderSelect" id="orderSelectLabel" hidden>Order By*:</label>
     <select name="orderSelect" id="orderSelect" disabled hidden></select>
-    <br>
-    
-    <label for="groupTable" id="groupTableLabel" hidden>Group Table*:</label>
-    <select name="groupTable" id="groupTable" disabled hidden></select>
     <br>
     <label for="groupSelect" id="groupSelectLabel" hidden>Group By*:</label>
     <select name="groupSelect" id="groupSelect" disabled hidden></select>

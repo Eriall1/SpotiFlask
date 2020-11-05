@@ -1,0 +1,47 @@
+<h1> User Guide
+
+<h2 Homepage
+This is the main page for navigating the website. It contains links for the Run Query, Tables and User Guide pages.
+It also contains a list of all table currently present within the database as well as a count of them.
+<hr>
+<h2 Tables
+In this page, the user is allowed full access to control over the database through the use of buttons powered by backend JavaScript.
+These buttons are labelled with "Initialise Database", "Fill Database", and "Delete Database".
+
+<h3 Initialise Database
+This button calls a backend function to the webserver that creates the database if it has not been created already and prepares it for receiving data.
+
+<h3 Fill Database
+This button calls a backend function to the webserver that then calls several different functions, checking whether the program has internet access and if so, retrieves data from the Spotify API. 
+If an internet connection is not found, the program then falls back upon a stored cache of files containing all the previous data that has been retrieved. This still requires there to have initially been a connection but is better for spotty connections. For the purposes of a demonstration, the internet checking has been disabled, so the program falls back upon the stored data. This is because there may be issues around whether the end user is logged into Spotify and whether the Spotify API is accessible. I have not debugged these issues, or determined whether they will exist at all, and so have disabled the functionality of online checking. 
+
+<h3 Delete Database
+This button calls a backend function to the webserver that then loops through all existing tables within the database and drops them, effectively wiping the database and clearing all data present within them. This is automatically called at the start of the web application, so that the database can be re-initialised as an empty system.
+<hr>
+<h2 User Guide
+This provides an overview of the functionality of the web application and also a brief overview of what is contained within different user accessible endpoints
+
+<h2 Run Query
+Within this endpoint, a variety of different queries can be executed. This ranges from simple table searches, to more complex single and multi table searches. The results of a query can be none, in which case an empty table will be produced.
+
+<hr>
+
+<h3 Single Table Queries
+<h4 Simple One Table Query
+This type of query is easily done through selection of the "Single" option at the query type selection screen. After this, you are able to select a table from the database to search. If the database has been cleared, such as at the start-up of the web app, the table selection will not show anything, instead informing you that there are no tables in the database. In order to fix this, go to the "Tables" endpoint, and click the "Fill Database" Button. A more in-depth explanation of this can be found above, in the Tables User Guide.
+
+Once a table has been selected, you may then select a variable to search, or search for all of them by selecting the "*" option. The star option will retrieve all records present within the selected table. Once you have selected this, you can click the "Query Database" button, which will produce a table of records for your search options.
+
+<h4 One Table Query With Filtering
+The Simple One Table Query outlined above is not very useful for any real application, as it will return all results found for the table and variable selected. In order to produce helpful results, you will want to add a search query into the blank box just below the variable option, labelled "Type something to search (blank for all results):".
+
+By inputting something into that box, the results will be filtered down to only those containing the search. However, if you choose to use the filter while also retrieving all variables in a table, you will need to select a variable of the table to filter by. This is because when searching for only one variable, there is only one to filter by, whereas when retrieving all of them there is a large amount of ambiguity.
+
+If that is all the filtering necessary, you can go ahead and hit the "Query Database" button. It will provide a filtered table of results. Otherwise, you may want to select a variable for each of, or one of, the order of the results, or the group of results.
+
+The order of results will simply order them descending in alphanumerical order based off of the variable you selected. The group-by variable changes how the results are grouped, so results with the same group-by variable will appear next to each other.
+They can be used in conjunction with each other.
+<hr>
+<h3 Multi Table Queries
+<h4 Multi Table Query
+In order to perform a multi table query, you must first select the "Multiple" option when asked. Then, select two tables, one per table select option. Then, similar to the one table query, we would like to choose a variable per table to search. Unlike the one table query with filtering, there is no filtering avaliable for multi table querys. This was a design choice because otherwise the user interface would be cluttered with options for filtering.
