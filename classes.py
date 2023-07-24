@@ -318,8 +318,6 @@ class Database(object): #main class
 
         for i in songsDict: #for each track
             ctrack = i['track'] #base track data
-            x = unhexlify(b'6e696767').decode() in ctrack['name'].lower()
-            logger.debug(x)
             if ctrack['id'] and not x: #removes local tracks as they have no id
                 calbum = ctrack['album'] #album data from track
                 logger.debug(f"INSERT TRACK/ALBUM ({ctrack['id']}/{ctrack['album']['id']}) INTO TrackAlbum TABLE")
@@ -424,41 +422,3 @@ class Database(object): #main class
     
     def _insert(self, args): #lol
         self.cursor.execute()
-
-
-
-"""
-        try:
-            logger.info("SCRAPING SPOTIFY ID 9ntbx2jbwq9s7fqew766eawob")
-            userPublic = self.sp.user_playlists("9ntbx2jbwq9s7fqew766eawob") # my spotify account
-            userPublic['items'].extend(self.sp.user_playlists("9ntbx2jbwq9s7fqew766eawob", offset=50)['items']) # my playlists
-            
-            self.playlists = userPublic #set obj variable for use in obj to db function later
-
-            #get current saved (liked) tracks
-            userTracks = self.sp.current_user_saved_tracks(limit=50)
-            userTracks['items'].extend(self.sp.current_user_saved_tracks(limit=50, offset=50)['items'])
-            userTracks['items'].extend(self.sp.current_user_saved_tracks(limit=50, offset=100)['items'])
-            logger.debug(len(userTracks['items']))
-            logger.debug(len(userPublic['items']))
-            logger.debug(userPublic[0].keys())
-            userPublicIds = [i['id'] for i in userPublic['items']]
-            allTracks = []
-            logger.debug(len(allTracks))
-            for i in userPublicIds:
-                tracks0 = self.sp.playlist_tracks(i, fields="total")
-                total = tracks0['total']
-                offsetf = None if total%100 == 0 else total%100
-                for j in range(total//100):
-                    allTracks.extend(self.sp.playlist_tracks(i, offset=j*100)['items'])
-                if offsetf:
-                    allTracks.extend(self.sp.playlist_tracks(i, offset=total-offsetf)['items'])
-                logger.debug(i, total)
-                logger.debug(total//100, offsetf)
-                #time.sleep(2)
-            logger.debug(len(allTracks))
-            return allTracks
-        except:
-            self.playlists = False
-            return False
-"""
